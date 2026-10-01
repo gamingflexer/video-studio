@@ -76,5 +76,6 @@ if [ -f "$APP_DIR/assets/icon.png" ]; then
   iconutil -c icns "$SET" -o "$BUNDLE/Contents/Resources/icon.icns"
   rm -rf "$(dirname "$SET")"
 fi
-touch "$BUNDLE"   # makes Finder and Spotlight pick up the new icon
+touch "$BUNDLE"   # makes Finder pick up the new icon
+mdimport "$BUNDLE" >/dev/null 2>&1 || true   # and Spotlight find it straight away
 echo "Created: $BUNDLE"
