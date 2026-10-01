@@ -35,6 +35,8 @@ export interface Source {
   /** relative to the project folder, or absolute */
   file: string;
   label?: string;
+  /** what this take is, and — when it is not in the cut — why it was left out */
+  note?: string;
 }
 
 export interface Shot {
@@ -50,8 +52,10 @@ export interface Shot {
   /** extra clockwise rotation applied before the crop */
   rotate?: 0 | 90 | 180 | 270;
   label: string;
-  /** why the editor (Claude) cut it this way */
+  /** why the editor (Claude) cut it this way: why this take, why it starts and ends where it does */
   note?: string;
+  /** what else was tried or considered for this slot, and why it lost */
+  considered?: string;
   /** generated shots: length in seconds and an optional still to show */
   duration?: number;
   image?: string;
@@ -65,6 +69,8 @@ export interface EditDoc {
   id: string;
   title: string;
   description?: string;
+  /** the thinking behind the whole cut: structure, pacing, what it is matching, what was traded off */
+  reasoning?: string;
   width: number;
   height: number;
   fps: number;

@@ -354,3 +354,10 @@ input[type="range"] { accent-color: var(--accent); min-width: 0; }
 .pill.tally { height: 22px; border: 1px solid var(--line); cursor: pointer; white-space: nowrap; }
 .pill.tally b { color: var(--text); font-weight: 600; }
 .pill.tally.on { border-color: var(--accent); }
+
+/* ------------------------------------------------------------ reasoning line under the monitor */
+.why { display: flex; gap: 10px; align-items: baseline; padding: 6px 12px; border-top: 1px solid var(--line); background: var(--panel); min-height: 30px; }
+.why b { font-size: 10.5px; color: var(--dim); font-weight: 600; white-space: nowrap; }
+.why span { color: var(--text-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ai-note i { font-style: normal; color: var(--dim); }
+.modal .ai-note b { display: block; }

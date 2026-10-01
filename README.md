@@ -67,6 +67,17 @@ The **Shortcuts** button under the monitor (or `?`) shows this list. Light / dar
 
 Schema: `lib/types.ts` (`EditDoc`, `Shot`, `Grade`, `Review`).
 
+## The reasoning Claude saves (and where you see it)
+
+`edit.json` carries the "why" as well as the cut, and the Studio surfaces it:
+
+| Field | Meaning | Shown |
+|---|---|---|
+| `shots[].note` | why this take, and why it starts and ends exactly there | "Why this cut" under the monitor as the film plays · shot tooltip · Cut & notes · inspector |
+| `shots[].considered` | what else was tried for that slot and why it lost | Cut & notes · inspector |
+| `sources[].note` | what a take is; for unused takes, why it was left out | "Takes left out" in Cut & notes · source-lane tooltip |
+| `reasoning` | the thinking behind the whole cut | top of Cut & notes |
+
 ## How the colour stays honest
 
 The whole grade (primaries → LUT mix → curves) is baked into one 33-point cube by `lib/color.ts`. The monitor samples that cube in a shader and ffmpeg applies the same cube with `lut3d`, so preview and render agree (measured: within ~1/255 on real footage). Only the vignette is outside the cube (shader ↔ ffmpeg `vignette`, same cos⁴ falloff).

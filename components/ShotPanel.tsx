@@ -17,6 +17,10 @@ interface Props {
   onSplit: () => void;
   onNotes: (notes: string) => void;
   onSelect: (id: string) => void;
+  /** the thinking behind the whole cut (edit.json → reasoning) */
+  reasoning?: string;
+  /** takes that are not in the cut, with the reason when one was recorded */
+  unused: { id: string; note?: string }[];
   /** live playhead: seconds on the timeline + the label of the shot under it */
   now: () => { t: number; label: string; ok: boolean };
   fps: number;
@@ -95,6 +99,8 @@ export default function ShotPanel(p: Props) {
             <div className="ai-note">
               <b>Why Claude cut it this way</b>
               {s.note}
+              {s.considered && <span><i>Also considered:</i> {s.considered}</span>}
+              {p.source?.note && <span><i>About this take:</i> {p.source.note}</span>}
               {p.base && s.source && <em>Claude’s cut: {p.base.in.toFixed(2)} → {p.base.out.toFixed(2)} s{p.base.speed !== 1 ? ` at ${p.base.speed}×` : ""}</em>}
             </div>
           )}
@@ -109,6 +115,21 @@ export default function ShotPanel(p: Props) {
         </>
       ) : (
         <p className="hint">Select a shot in the timeline to trim it, comment on it or see why it was cut that way.</p>
+      )}
+
+      {p.reasoning && (
+        <>
+          <h4>Claude’s approach to this cut</h4>
+          <div className="ai-note">{p.reasoning}</div>
+        </>
+      )}
+      {p.unused.length > 0 && (
+        <>
+          <h4>Takes left out <small>{p.unused.length}</small></h4>
+          <ul className="changes">
+            {p.unused.map((u) => <li key={u.id} className="comment"><b>{u.id}</b><span>{u.note ?? "no reason recorded"}</span></li>)}
+          </ul>
+        </>
       )}
 
       <h4>Changes since Claude’s cut <small>{p.changes.length || "none"}</small></h4>

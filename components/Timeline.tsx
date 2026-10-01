@@ -225,7 +225,7 @@ export default function Timeline(p: Props) {
     return (
       <div key={s.id} className={`tl-block${sel ? " sel" : ""}${s.source ? "" : " gen"}`}
         style={{ left: q.start * pps, width: w - 1, ["--hue" as string]: hue }}
-        title={`${q.index + 1}. ${s.label}\n${s.source ?? "generated"} · ${shotLength(s).toFixed(2)} s\ndouble-click: reasoning, code and comment · right-click: menu`}
+        title={`${q.index + 1}. ${s.label}\n${s.source ?? "generated"} · ${shotLength(s).toFixed(2)} s${s.note ? `\n\nWhy: ${s.note}` : ""}\n\ndouble-click: reasoning, code and comment · right-click: menu`}
         onDoubleClick={() => p.onOpen(s.id)}
         onContextMenu={(e) => { e.preventDefault(); p.onMenu(s.id, e.clientX, e.clientY); }}
         onPointerDown={(e) => down(e, { kind: "body", id: s.id, x0: e.clientX, moved: false })} onPointerMove={move} onPointerUp={up}>
@@ -290,9 +290,9 @@ export default function Timeline(p: Props) {
           const m = p.media[s.id], w = Math.max(s.duration * srcPps, 4), hue = sourceHue(s.id);
           return (
             <div className="tl-lane-row" key={s.id} id={`lane-${s.id}`}>
-              <div className="tl-label src" style={{ ["--hue" as string]: hue }}>
+              <div className="tl-label src" style={{ ["--hue" as string]: hue }} title={s.note ? `${s.id}\n${s.note}` : s.id}>
                 <span>{s.id}</span>
-                <small>{s.online ? `${usedLen.toFixed(1)} of ${s.duration.toFixed(1)} s · ${Math.round((usedLen / s.duration) * 100)} %` : "offline"}</small>
+                <small>{s.online ? `${usedLen.toFixed(1)} of ${s.duration.toFixed(1)} s · ${Math.round((usedLen / s.duration) * 100)} %` : "offline"}{s.note ? " · why ⓘ" : ""}</small>
               </div>
               <div className={`tl-lane${s.online ? "" : " offline"}`} style={{ width: w }}
                 onPointerDown={(e) => { if (s.online) { down(e, { kind: "source", sourceId: s.id }); const r = e.currentTarget.getBoundingClientRect(); p.onSourcePreview(s.id, clamp((e.clientX - r.left) / srcPps, 0, s.duration)); } }}

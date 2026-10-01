@@ -90,6 +90,7 @@ export default function Studio({ id }: { id: string }) {
   const fileSeek = useRef<number | null>(null);
   const tcRef = useRef<HTMLSpanElement>(null);
   const shotRef = useRef<HTMLSpanElement>(null);
+  const whyRef = useRef<HTMLSpanElement>(null);
   const history = useRef<{ stack: Review[]; redo: Review[]; last: number; tag: string }>({ stack: [], redo: [], last: 0, tag: "" });
   const lutRequested = useRef<Set<string>>(new Set());
   const drawOpts = useRef({ uv: IDENTITY_UV, gradeOn: true, split: 0, vignette: 0 });
@@ -384,6 +385,8 @@ export default function Studio({ id }: { id: string }) {
           if (shot.id !== lastShot) {
             lastShot = shot.id;
             if (shotRef.current) shotRef.current.textContent = label;
+            // the reasoning for whatever is on screen, without having to click the shot
+            if (whyRef.current) whyRef.current.textContent = shot.note?.trim() || (project.edit.shots.some((s) => s.id === shot.id) ? "No reason was recorded for this shot." : "You added this shot.");
           }
         } else R.upload(null);
         // audio bed follows the picture clock
@@ -819,6 +822,12 @@ export default function Studio({ id }: { id: string }) {
           )}
         </div>
 
+        {mode.kind === "edit" && (
+          <div className="why" title="Claude’s reason for the shot under the playhead — double-click the shot for the full details">
+            <b>Why this cut</b><span ref={whyRef} />
+          </div>
+        )}
+
         {pending && (
           <form className="askbar" onSubmit={(ev) => { ev.preventDefault(); savePending(); }}>
             <span><b>{pending.label}</b> {pendingVerb}.</span>
@@ -893,6 +902,7 @@ export default function Studio({ id }: { id: string }) {
             onReset={() => { const b = selected && baseById.get(selected.id); if (b) patchShot(b.id, { in: b.in, out: b.out, speed: b.speed }); }}
             onDelete={() => selected && removeShot(selected.id)} onSplit={splitShot}
             onNotes={(notes) => update((r) => ({ ...r, notes }), "notes")} onSelect={setSelectedId}
+            reasoning={e.reasoning} unused={project.sources.filter((src) => !review.shots.some((sh) => sh.source === src.id)).map((src) => ({ id: src.id, note: src.note }))}
             now={nowAt} fps={e.fps} marks={marks} onAddMark={addMark} onSeek={seek}
             onRemoveMark={(mid) => update((r) => ({ ...r, marks: (r.marks ?? []).filter((m) => m.id !== mid) }))} />
         )}

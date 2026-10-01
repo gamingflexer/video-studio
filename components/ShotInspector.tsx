@@ -101,6 +101,8 @@ export default function ShotInspector(p: Props) {
           <section>
             <h4>Why Claude cut it this way</h4>
             <p className="ai-note">{base?.note || shot.note || (base ? "No reason was recorded for this shot." : "You added this shot — it is not in Claude’s cut.")}</p>
+            {(base?.considered || shot.considered) && <p className="ai-note"><b>Also considered</b>{base?.considered || shot.considered}</p>}
+            {p.source?.note && <p className="ai-note"><b>About this take</b>{p.source.note}</p>}
             <dl className="facts">
               <dt>Source</dt><dd>{shot.source ?? "generated"}{p.source ? ` · ${p.source.width}×${p.source.height} · ${p.source.fps.toFixed(2)} fps · ${p.source.duration.toFixed(2)} s long${p.source.online ? "" : " · offline"}` : ""}</dd>
               {shot.source && <><dt>Used</dt><dd>{timecode(shot.in, p.source?.fps ?? edit.fps)} → {timecode(shot.out, p.source?.fps ?? edit.fps)} ({shot.in.toFixed(3)} → {shot.out.toFixed(3)} s){shot.speed !== 1 ? ` at ${shot.speed}×` : ""}</dd></>}

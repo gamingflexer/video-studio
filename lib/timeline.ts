@@ -202,7 +202,7 @@ export function buildPrompt(p: ProjectPayload, review: Review, luts: LutMeta[]):
   L.push(`${preset.name} — ${preset.detail}, exported to the §0c standard. Output goes in ${p.dir}/${e.rendersDir ?? "renders"}/ with a new version number; also keep an ungraded render of the same cut.`);
   L.push("");
   L.push("## What to do");
-  L.push("1. Apply the cut changes to the build script and to edit.json (edit.json must match what the build renders; keep shot ids stable, keep my comments as the shot's `note` history).");
+  L.push("1. Apply the cut changes to the build script and to edit.json (edit.json must match what the build renders; keep shot ids stable). For every shot you touch, rewrite its `note` to say why it is now cut this way — why this take, why it starts and ends there — and fold my comment in; add `considered` when you tried an alternative. The Studio shows this reasoning to me.");
   L.push("2. Apply the grade with the baked cube(s). Do not re-derive the look from the numbers above — they are only there so you understand it.");
   L.push("3. Render, check the result against my comments shot by shot (frame sheet), then delete edit.review.json so the Studio starts clean from the new edit.json.");
   L.push("4. Tell me what changed, and anything you could not do exactly as asked.");
@@ -256,7 +256,7 @@ export function buildShotPrompt(p: ProjectPayload, review: Review, shotId: strin
   L.push(shot.comment?.trim() || "(no comment — just apply the timing above)");
   L.push("");
   L.push("## What to do");
-  L.push("1. Apply this to the build script and to edit.json for this shot only; keep its id, and add my comment to its `note`.");
+  L.push("1. Apply this to the build script and to edit.json for this shot only; keep its id, and rewrite its `note` to say why it is now cut this way (fold my comment in; add `considered` if you tried an alternative) — the Studio shows that reasoning to me.");
   L.push(`2. Leave every other shot as it is in edit.json${others ? ` — edit.review.json holds ${others} other change${others > 1 ? "s" : ""} of mine that I have NOT sent yet` : ""}. Do not delete edit.review.json.`);
   L.push("3. Re-render (plus the ungraded twin), check this shot on a frame sheet against my comment, and tell me what changed.");
   return L.join("\n");
