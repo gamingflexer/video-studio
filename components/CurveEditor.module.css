@@ -1,0 +1,218 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------------------------------------------------------------- channel tabs */
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+.tab {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  height: 22px;
+  padding: 0 6px;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--dim);
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab:focus-visible {
+  outline: 1px solid var(--dim);
+  outline-offset: -1px;
+}
+
+.tabActive {
+  color: var(--text);
+  background: var(--bg);
+  box-shadow: inset 0 -2px 0 var(--ch);
+}
+
+.swatch {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ch);
+}
+
+/* small mark on a channel whose curve is not the identity */
+.modified {
+  flex: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------------------------------------------------------------- graph */
+
+.graphWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.8;
+  min-height: 220px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.graph {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+
+.graph:focus-visible {
+  outline: 1px solid var(--dim);
+  outline-offset: -1px;
+}
+
+.dragging,
+.dragging .hit {
+  cursor: grabbing;
+}
+
+.grid line {
+  stroke: var(--line);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.identity {
+  stroke: var(--dim);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.35;
+}
+
+.histogram {
+  opacity: 0.14;
+  stroke: none;
+  pointer-events: none;
+}
+
+.ghost {
+  fill: none;
+  stroke-width: 1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.curve {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* 16px invisible hit area around each 9px handle */
+.hit {
+  fill: transparent;
+  stroke: none;
+  cursor: grab;
+}
+
+.handle {
+  fill: var(--bg);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.handleSelected {
+  stroke: var(--accent);
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 22px;
+}
+
+.readout {
+  font-size: 11px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.readout b {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.hint {
+  opacity: 0.8;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.button {
+  height: 22px;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--dim);
+}
+
+.button:focus-visible {
+  outline: 1px solid var(--dim);
+  outline-offset: 1px;
+}
+
+.button:disabled {
+  color: var(--dim);
+  opacity: 0.55;
+  cursor: default;
+}

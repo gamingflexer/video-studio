@@ -1,0 +1,62 @@
+[
+  {
+    "id": "blockbuster",
+    "name": "Blockbuster",
+    "file": "blockbuster.cube",
+    "size": 33,
+    "group": "web",
+    "addedAt": "2026-10-01T15:43:41.773Z",
+    "origin": "https://editor-hub.com/luts/eh-blockbuster.cube",
+    "look": "Milder teal-and-orange: blue-teal shadows, warmer skin, added contrast and saturation",
+    "licence": "CC0 - page states: \"EditorHub Originals are made by us and released as CC0 - use them anywhere, no strings.\" (file header also says CC0)",
+    "sourceUrl": "https://editor-hub.com/assets/luts"
+  },
+  {
+    "id": "golden-hour",
+    "name": "Golden Hour",
+    "file": "golden-hour.cube",
+    "size": 33,
+    "group": "web",
+    "addedAt": "2026-10-01T15:43:41.718Z",
+    "origin": "https://editor-hub.com/luts/eh-golden-hour.cube",
+    "look": "Warm amber wash: mids pushed strongly to orange/yellow, whites tinted warm",
+    "licence": "CC0 - page states: \"EditorHub Originals are made by us and released as CC0 - use them anywhere, no strings.\" (file header also says CC0)",
+    "sourceUrl": "https://editor-hub.com/assets/luts"
+  },
+  {
+    "id": "kodak-portra-400",
+    "name": "Kodak Portra 400",
+    "file": "kodak-portra-400.cube",
+    "size": 65,
+    "group": "web",
+    "addedAt": "2026-10-01T15:43:42.002Z",
+    "origin": "http://rawtherapee.com/shared/HaldCLUT.zip#HaldCLUT/Color/Kodak/Kodak Portra 400 2.png",
+    "look": "Still-film negative emulation: gentle warm skin tones, slightly lifted and softened contrast",
+    "licence": "CC BY-SA 4.0 \u2014 RawTherapee Film Simulation Collection by Pat David, Pavlov Dmitry and Michael Ezra",
+    "sourceUrl": "https://rawpedia.rawtherapee.com/Film_Simulation"
+  },
+  {
+    "id": "matte-fade",
+    "name": "Matte Fade",
+    "file": "matte-fade.cube",
+    "size": 33,
+    "group": "web",
+    "addedAt": "2026-10-01T15:43:41.665Z",
+    "origin": "https://editor-hub.com/luts/eh-matte-fade.cube",
+    "look": "Subtle faded-film look: slightly warm mids, softened saturation, cream-tinted whites",
+    "licence": "CC0 - page states: \"EditorHub Originals are made by us and released as CC0 - use them anywhere, no strings.\" (file header also says CC0)",
+    "sourceUrl": "https://editor-hub.com/assets/luts"
+  },
+  {
+    "id": "midnight",
+    "name": "Midnight",
+    "file": "midnight.cube",
+    "size": 33,
+    "group": "web",
+    "addedAt": "2026-10-01T15:43:41.828Z",
+    "origin": "https://editor-hub.com/luts/eh-midnight.cube",
+    "look": "Cool moody look: darker mids with a blue cast, blue-lifted blacks",
+    "licence": "CC0 - page states: \"EditorHub Originals are made by us and released as CC0 - use them anywhere, no strings.\" (file header also says CC0)",
+    "sourceUrl": "https://editor-hub.com/assets/luts"
+  }
+]

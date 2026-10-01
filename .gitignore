@@ -1,0 +1,8 @@
+node_modules
+.next
+.cache
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+# videos opened on their own (machine-specific paths)
+/projects/
