@@ -422,3 +422,5 @@ input[type="range"] { accent-color: var(--accent); min-width: 0; }
 .fin-compare { display: grid; gap: 10px; }
 .fin-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 @media (max-width: 900px) { .fin-grid, .fin-one { grid-template-columns: 1fr; } .fin-tree { position: static; } .fin-bars li { grid-template-columns: minmax(0, 1fr) 44px; row-gap: 3px; } .fin-bars .bar { grid-column: 1 / -1; grid-row: 2; } .fin-step { grid-column: 1 / -1; } }
+.fin-reveal { height: 22px; padding: 0 6px; background: transparent; border-color: transparent; color: var(--dim); }
+.fin-reveal:hover:not(:disabled) { color: var(--text); }

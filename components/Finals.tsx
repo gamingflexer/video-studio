@@ -125,6 +125,9 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
     setAll(await (await fetch("/api/finals", { cache: "no-store" })).json());
   };
 
+  const reveal = (branch?: string) =>
+    fetch("/api/reveal", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: p!.doc.id, branch }) });
+
   const toggleCompare = (id: string) => setCompare((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id].slice(-4)));
   const all3 = (fn: (v: HTMLVideoElement) => void) => vids.current.forEach((v) => v && fn(v));
 
@@ -178,6 +181,9 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
                     {b.status === "building" && <span className="bar thin"><i style={{ width: `${b.progress?.pct ?? 0}%` }} /></span>}
                   </span>
                 </button>
+                <button className="fin-reveal" title="Open in Finder" aria-label={`Open ${b.label} in Finder`} onClick={() => reveal(b.id)}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>
+                </button>
                 <label className="fin-cmp" title="Add to side-by-side">
                   <input type="checkbox" checked={compare.includes(b.id)} onChange={() => toggleCompare(b.id)} disabled={!playable(p, b)} />
                 </label>
@@ -194,7 +200,7 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
               {p.doc.trunk.file && p.media[p.doc.trunk.file]?.exists && (
                 <div className="fin-video"><video src={media(p.media[p.doc.proxies?.[p.doc.trunk.file] ?? ""]?.exists ? p.media[p.doc.proxies![p.doc.trunk.file]].abs : p.media[p.doc.trunk.file].abs)} controls playsInline preload="metadata" /></div>
               )}
-              <p className="dim">Pick a branch on the left to watch it, or tick several to compare.</p>
+              <div className="row"><button onClick={() => reveal()}>Open in Finder</button><span className="dim">Pick a branch on the left to watch it, or tick several to compare.</span></div>
             </div>
           )}
 
@@ -214,6 +220,7 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
                       <div className="row"><b>{b.label}</b><span className={`pill s-${b.status}`}>{STATUS[b.status]}</span></div>
                       <Player p={p} b={b} controls muted={i > 0} refCb={(v) => (vids.current[i] = v)} />
                       <div className="row wrap">
+                        <button onClick={() => reveal(b.id)}>Open in Finder</button>
                         <button onClick={() => save(b, { status: "chosen" })} className={b.status === "chosen" ? "primary" : ""}>Pick this one</button>
                       </div>
                     </div>
@@ -244,6 +251,7 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
                 </label>
                 <div className="row wrap">
                   <button onClick={() => save(branch, { note })} disabled={note === (branch.note ?? "")}>Save note</button>
+                  <button onClick={() => reveal(branch.id)}>Open in Finder</button>
                   <span className="spacer" />
                   <button onClick={() => save(branch, { status: "dropped" })} className="danger">Drop</button>
                   <button onClick={() => save(branch, { status: "final" })}>Mark final</button>
