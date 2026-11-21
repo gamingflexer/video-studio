@@ -38,6 +38,7 @@ function info(dir: string, file: string): MediaInfo {
 function files(doc: FinalsDoc) {
   const out = [doc.trunk.file];
   for (const b of doc.branches) out.push(b.file, b.preview, b.still);
+  out.push(...Object.values(doc.proxies ?? {}));
   return out.filter((f): f is string => !!f);
 }
 

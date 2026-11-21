@@ -22,7 +22,12 @@ function ago(iso?: string) {
 
 /** the file to play for a branch: the finished render, else its draft */
 function playable(p: FinalsPayload, b: Branch) {
-  for (const f of [b.file, b.preview]) if (f && p.media[f]?.exists) return { abs: p.media[f].abs, draft: f !== b.file };
+  for (const f of [b.file, b.preview]) {
+    if (!f || !p.media[f]?.exists) continue;
+    const px = p.doc.proxies?.[f]; // light 720p copy: the CRF 10 / 60 fps masters stutter in a browser tab
+    const abs = px && p.media[px]?.exists ? p.media[px].abs : p.media[f].abs;
+    return { abs, draft: f !== b.file, original: p.media[f].abs };
+  }
   return null;
 }
 
@@ -187,7 +192,7 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
             <div className="fin-trunk">
               <p>{p.doc.description}</p>
               {p.doc.trunk.file && p.media[p.doc.trunk.file]?.exists && (
-                <div className="fin-video"><video src={media(p.media[p.doc.trunk.file].abs)} controls playsInline preload="metadata" /></div>
+                <div className="fin-video"><video src={media(p.media[p.doc.proxies?.[p.doc.trunk.file] ?? ""]?.exists ? p.media[p.doc.proxies![p.doc.trunk.file]].abs : p.media[p.doc.trunk.file].abs)} controls playsInline preload="metadata" /></div>
               )}
               <p className="dim">Pick a branch on the left to watch it, or tick several to compare.</p>
             </div>
@@ -244,7 +249,7 @@ export default function Finals({ initial }: { initial: FinalsPayload[] }) {
                   <button onClick={() => save(branch, { status: "final" })}>Mark final</button>
                   <button className="primary" onClick={() => save(branch, { status: "chosen" })}>Pick this one</button>
                 </div>
-                {playable(p, branch) && <p className="hint">{playable(p, branch)!.abs}</p>}
+                {playable(p, branch) && <p className="hint">Playing a light preview. Full quality: {playable(p, branch)!.original}</p>}
               </div>
             </div>
           )}

@@ -196,6 +196,8 @@ export interface FinalsDoc {
   owner?: string;
   trunk: { label: string; file?: string; about?: string };
   branches: Branch[];
+  /** light playback copies (720p 30 fps) keyed by the path as written above; the page plays these, the originals stay for download */
+  proxies?: Record<string, string>;
   updatedAt?: string;
 }
 
