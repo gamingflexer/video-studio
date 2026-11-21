@@ -157,3 +157,53 @@ export const RENDER_PRESETS: { id: RenderPresetId; name: string; detail: string 
   { id: "uhd", name: "4K", detail: "2160 short side, H.264 CRF 10" },
   { id: "master", name: "Master", detail: "project size, ProRes 422 HQ 10-bit .mov" },
 ];
+
+/* ------------------------------------------------------------ final edits (variations as branches) */
+
+export type BranchStatus = "idea" | "building" | "draft" | "final" | "chosen" | "dropped";
+
+/** one variation of a video: a look, a re-cut, a language… Branches can fork from other branches (`parent`). */
+export interface Branch {
+  id: string;
+  label: string;
+  /** branch id it forks from; omitted = forks from the trunk */
+  parent?: string;
+  status: BranchStatus;
+  /** the finished render (relative to finals.json, absolute, or ~/…) */
+  file?: string;
+  /** a draft / proof render to show while `file` does not exist yet */
+  preview?: string;
+  /** a contact sheet or still */
+  still?: string;
+  /** edit.json id of the project that builds it, when there is one */
+  project?: string;
+  /** what this variation is and how it differs from its siblings */
+  about?: string;
+  /** reviewer's note (set in the Studio) */
+  note?: string;
+  /** where its look comes from */
+  reference?: { label: string; url?: string };
+  /** written by the session building it (scripts/progress.mjs): 0–100, what it is doing now, when */
+  progress?: { pct: number; step: string; at: string };
+}
+
+/** finals.json: one video, its base cut (the trunk) and every variation of it */
+export interface FinalsDoc {
+  id: string;
+  title: string;
+  description?: string;
+  /** who / what it is for (e.g. "Dr. Vikas Krishna") */
+  owner?: string;
+  trunk: { label: string; file?: string; about?: string };
+  branches: Branch[];
+  updatedAt?: string;
+}
+
+export interface MediaInfo { file: string; abs: string; exists: boolean; size: number; mtime: number }
+
+export interface FinalsPayload {
+  doc: FinalsDoc;
+  dir: string;
+  /** resolved files keyed by the path written in the doc */
+  media: Record<string, MediaInfo>;
+}

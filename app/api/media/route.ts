@@ -3,6 +3,7 @@ import path from "node:path";
 import { Readable } from "node:stream";
 import { CACHE, LOOSE_PROJECTS, MEDIA_EXT, inside, workspace } from "@/lib/server/paths";
 import { listProjects } from "@/lib/server/projects";
+import { finalsMedia } from "@/lib/server/finals";
 import type { EditDoc } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +18,7 @@ const TYPES: Record<string, string> = {
 function allowed(abs: string) {
   if (!MEDIA_EXT.has(path.extname(abs).toLowerCase())) return false;
   if (inside(workspace(), abs) || inside(CACHE, abs) || inside(LOOSE_PROJECTS, abs)) return true;
+  if (finalsMedia().has(abs)) return true; // renders and drafts a finals.json lists (~/Downloads, the SSD)
   for (const ref of listProjects()) {
     try {
       const e = JSON.parse(fs.readFileSync(ref.file, "utf8")) as EditDoc;

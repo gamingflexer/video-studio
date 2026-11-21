@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { ProjectRef } from "@/lib/server/projects";
 import ThemeToggle from "./ThemeToggle";
 import Finder from "./Finder";
+import TopTabs from "./TopTabs";
 
 export default function Home({ projects, workspace }: { projects: ProjectRef[]; workspace: string }) {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function Home({ projects, workspace }: { projects: ProjectRef[]; 
 
   return (
     <main className="home">
-      <div className="row"><h1>Studio</h1><span className="spacer" /><ThemeToggle /></div>
+      <div className="row"><h1>Studio</h1><TopTabs active="cuts" /><span className="spacer" /><ThemeToggle /></div>
       <p className="dim">Grade with LUTs and curves, see and move Claude’s cuts, leave notes, render, and hand the review back to Claude Code.</p>
 
       <p className="hint">Video folder: {workspace}</p>

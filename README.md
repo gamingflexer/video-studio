@@ -56,6 +56,21 @@ cuts guessed by scene detection (kept in `projects/` inside this app).
 
 The **Shortcuts** button under the monitor (or `?`) shows this list. Light / dark mode is the button at the top right (the monitor and the curve graph stay dark in both).
 
+## Final edits (variations as branches)
+
+The **Final edits** tab (`/finals`, toggle at the top next to **Cuts**) shows every video that has a `finals.json` in its folder: one base cut (the trunk) and its variations as branches. A variation can be a look, a re-cut or a language, and a branch can fork from another branch (`parent`).
+
+- **Progress bar at the top**, in plain words: "Nothing is editing right now" or "3 videos editing · about 46 % done", with one bar per variation and what it is doing. The page refreshes every 10 s.
+- **Branch tree** on the left. Click a branch to watch it (the finished render, else its draft) and read what it is. Then leave a note, **Mark final**, **Drop** or **Pick this one** (only one branch per video can be chosen).
+- **Compare**: tick 2–4 branches to see them side by side, with *Play all from start*. Sound plays from the first only.
+
+`finals.json` schema: `FinalsDoc` in `lib/types.ts`. File paths may be relative to the json, absolute (e.g. `/Volumes/…`) or `~/…`; the media route serves exactly the files a `finals.json` lists.
+The session building a variation reports progress with one line:
+
+```bash
+node studio/scripts/progress.mjs videos/<project>/finals.json <branch-id> <0-100> "what it is doing now" [status]
+```
+
 ## Files per video
 
 ```
